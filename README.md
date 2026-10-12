@@ -6,6 +6,19 @@ Spring Boot (Kotlin + JPA + JWT) y base de datos PostgreSQL.
 Los artículos los suben los usuarios (consignación), un administrador los aprueba y se
 subastan en fechas definidas. Las pujas se validan en el servidor.
 
+## Capturas (modo demo)
+
+<p>
+  <img src="assets/screenshots/01_listado.png" width="180" />
+  <img src="assets/screenshots/02_detalle.png" width="180" />
+  <img src="assets/screenshots/03_subasta_en_vivo.png" width="180" />
+  <img src="assets/screenshots/04_perfil.png" width="180" />
+  <img src="assets/screenshots/05_consignaciones.png" width="180" />
+</p>
+
+Listado de subastas, detalle de la pieza, subasta en vivo (rango de puja válido e historial),
+perfil con medios de pago y consignaciones. Las ilustraciones de las piezas son propias y los datos son ficticios.
+
 ## Requisitos
 - JDK 17, Docker (o un PostgreSQL 16 propio), Android Studio con un emulador (API ≥ 24).
 
@@ -41,11 +54,25 @@ Crea `cliente@demo.local` / `Demo1234!` (con medio de pago verificado), `admin@d
 `Admin1234!` y una subasta abierta con un artículo. **No usar en producción.**
 
 ### App Android
+
+**Modo demo (por defecto): no necesita backend.** La app funciona sola con datos ficticios en
+memoria: subastas con pujas simuladas de otros postores, login con cualquier email/clave,
+perfil, medios de pago, consignaciones (el "tasador" las aprueba a los pocos segundos) y
+notificaciones. Los datos se pierden al cerrar la app.
+
+Instalar en un teléfono:
 ```bash
 cd frontend
-./gradlew :app:installDebug      # apunta a http://10.0.2.2:8080/ (el localhost de la PC visto desde el emulador)
-# Dispositivo físico o backend desplegado:
-./gradlew :app:installDebug -PsubastasBaseUrl=http://<IP-de-tu-PC>:8080/
+./gradlew :app:assembleDebug     # en Windows: gradlew.bat :app:assembleDebug
+# APK: frontend/app/build/outputs/apk/debug/app-debug.apk  -> pasarlo al teléfono e instalarlo
+# o, con el teléfono conectado por USB y depuración USB activada:
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
+**Con el backend real** (secciones anteriores):
+```bash
+./gradlew :app:installDebug -PdemoMode=false                                 # emulador -> http://10.0.2.2:8080/
+./gradlew :app:installDebug -PdemoMode=false -PsubastasBaseUrl=http://<IP-de-tu-PC>:8080/   # teléfono
 ```
 
 ### Tests del backend

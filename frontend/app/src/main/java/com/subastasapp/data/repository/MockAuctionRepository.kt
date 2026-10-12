@@ -28,46 +28,41 @@ import kotlin.math.ceil
  */
 object MockAuctionRepository : AuctionRepository {
 
+    // Imágenes ilustradas incluidas en la app (res/drawable-nodpi), así la demo no depende de internet.
+    private const val RES = "android.resource://com.subastasapp/drawable/"
+
     private val items = listOf(
         CatalogItem(
             id = 1,
             numeroPieza = "#88",
-            titulo = "Reloj Rolex GMT-Master II",
-            descripcion = "Edición 2023, caja de acero Oystersteel, bisel Cerachrom rojo y azul. " +
-                "Una de las piezas más codiciadas de la relojería deportiva contemporánea.",
+            titulo = "Reloj GMT de acero",
+            descripcion = "Reloj automático con caja de acero, bisel bicolor y función GMT. " +
+                "Pieza de ejemplo del catálogo demo.",
             valorBase = 15000.0,
             duenioActual = "Colección privada",
-            imagenes = listOf(
-                "https://picsum.photos/seed/rolex1/600/400",
-                "https://picsum.photos/seed/rolex2/600/400",
-                "https://picsum.photos/seed/rolex3/600/400"
-            )
+            imagenes = listOf(RES + "reloj_acero")
         ),
         CatalogItem(
             id = 2,
             numeroPieza = "#42",
-            titulo = "Reloj Patek Philippe Nautilus",
-            descripcion = "Patek Philippe Nautilus en oro rosa. Movimiento automático de manufactura.",
+            titulo = "Reloj deportivo de oro rosa",
+            descripcion = "Reloj deportivo en oro rosa con brazalete integrado. Movimiento automático.",
             valorBase = 80000.0,
             duenioActual = "Patrimonio familiar Rossi",
-            imagenes = listOf(
-                "https://picsum.photos/seed/patek1/600/400",
-                "https://picsum.photos/seed/patek2/600/400"
-            )
+            imagenes = listOf(RES + "reloj_oro")
         ),
         CatalogItem(
             id = 3,
             numeroPieza = "#07",
-            titulo = "Naturaleza",
-            descripcion = "Óleo sobre lienzo. Estudio de paisaje de la serie de jardines.",
+            titulo = "Jardín de nenúfares",
+            descripcion = "Óleo sobre lienzo. Estudio de paisaje de la serie de jardines acuáticos.",
             valorBase = 15600.0,
             duenioActual = "Galería Norte",
-            imagenes = listOf("https://picsum.photos/seed/monet1/600/400"),
+            imagenes = listOf(RES + "pintura"),
             arte = ArtMetadata(
-                artista = "Claude Monet",
-                fecha = "1899",
-                historia = "Pieza atribuida al período de Giverny. Procedencia documentada desde " +
-                    "1923, exhibida en dos retrospectivas europeas."
+                artista = "Escuela impresionista",
+                fecha = "Siglo XX",
+                historia = "Pieza de ejemplo del catálogo demo, en estilo impresionista."
             )
         ),
         CatalogItem(
@@ -77,7 +72,7 @@ object MockAuctionRepository : AuctionRepository {
             descripcion = "Juego de té victoriano de plata 925, compuesto por 18 piezas.",
             valorBase = 9000.0,
             duenioActual = "Sucesión Álvarez",
-            imagenes = listOf("https://picsum.photos/seed/tea1/600/400"),
+            imagenes = listOf(RES + "te"),
             esMultiElemento = true,
             cantidadElementos = 18
         )

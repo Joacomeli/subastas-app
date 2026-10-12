@@ -5,6 +5,9 @@ plugins {
 
 // URL del backend. Por defecto el emulador apunta al backend local (10.0.2.2 = localhost de la PC).
 // Para otro destino: ./gradlew installRelease -PsubastasBaseUrl=https://mi-backend.example.com/
+// Modo demo (por defecto activo): la app funciona sin backend con datos ficticios en memoria.
+// Para usar el backend real: -PdemoMode=false
+def demoMode = (project.findProperty('demoMode') ?: 'true').toString()
 def subastasBaseUrl = (project.findProperty('subastasBaseUrl') ?: 'http://10.0.2.2:8080/').toString()
 
 android {
@@ -28,10 +31,12 @@ android {
         // El emulador resuelve 10.0.2.2 como el localhost de la PC anfitriona.
         // Para un device físico: -PsubastasBaseUrl=http://<IP LAN de la PC>:8080/
         debug {
+            buildConfigField "boolean", "DEMO_MODE", demoMode
             buildConfigField "String", "BASE_URL", "\"${subastasBaseUrl}\""
         }
         // Firmamos con el keystore debug por simplicidad (entrega académica, no Play Store).
         release {
+            buildConfigField "boolean", "DEMO_MODE", demoMode
             buildConfigField "String", "BASE_URL", "\"${subastasBaseUrl}\""
             signingConfig signingConfigs.debug
             minifyEnabled false

@@ -41,14 +41,15 @@ class PujaServiceTest(
         itemId = items.save(ItemCatalogo(catalogo = catalogo.identificador!!, producto = 1, precioBase = BigDecimal("1000.00"), comision = BigDecimal("10.00"))).identificador!!
         repeat(8) { i ->
             val p = personas.save(Persona(documento = "doc$i-${System.nanoTime()}", nombre = "Postor $i", email = "postor$i-${System.nanoTime()}@test.local", password = "x"))
-            clientes.save(Cliente(identificador = p.identificador!!, numeroPais = 1, admitido = "si", categoria = "comun", verificador = 1))
-            mediosPago.save(MedioPago(personaId = p.identificador, tipo = "TARJETA", verificado = true))
-            postores += p.identificador
+            val pid = p.identificador!!
+            clientes.save(Cliente(identificador = pid, numeroPais = 1, admitido = "si", categoria = "comun", verificador = 1))
+            mediosPago.save(MedioPago(personaId = pid, tipo = "TARJETA", verificado = true))
+            postores += pid
         }
     }
 
     @Test
-    fun `pujas simultaneas por el mismo monto: solo una es aceptada y hay un unico ganador`() {
+    fun `pujas simultaneas por el mismo monto - solo una es aceptada y hay un unico ganador`() {
         val hilos = Executors.newFixedThreadPool(postores.size)
         val salida = CountDownLatch(1)
         val tareas = postores.map { id -> hilos.submit<ResultadoPuja> { salida.await(); service.registrarPuja(id, subastaId, 1010.0) } }

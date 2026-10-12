@@ -16,11 +16,11 @@ import com.subastasapp.ui.theme.SubastasAppTheme
 private val sampleItem = CatalogItem(
     id = 1,
     numeroPieza = "#88",
-    titulo = "Reloj Rolex GMT-Master II",
+    titulo = "Reloj GMT de acero",
     descripcion = "Edición 2023, caja de acero Oystersteel.",
     valorBase = 15000.0,
     duenioActual = "Colección privada",
-    arte = ArtMetadata("Rolex", "2023", "Pieza deportiva contemporánea.")
+    arte = ArtMetadata("Demo", "2023", "Pieza deportiva contemporánea.")
 )
 
 private val sampleAuction = Auction(

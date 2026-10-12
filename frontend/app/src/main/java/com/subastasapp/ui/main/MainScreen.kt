@@ -93,8 +93,15 @@ fun MainScreen(
                 // Repositorio real de subastas (REST) + stream de pujas por polling.
                 val homeContext = LocalContext.current
                 val subastaApi = remember { RetrofitClient.getSubastaApiService(homeContext) }
-                val auctionRepo = remember { RealAuctionRepository(subastaApi) }
-                val bidStream = remember { PollingBidStream(subastaApi) }
+                // Modo demo: subastas y pujas simuladas en memoria (sin backend).
+                val auctionRepo: com.subastasapp.data.repository.AuctionRepository = remember {
+                    if (com.subastasapp.BuildConfig.DEMO_MODE) com.subastasapp.data.repository.MockAuctionRepository
+                    else RealAuctionRepository(subastaApi)
+                }
+                val bidStream: com.subastasapp.data.realtime.BidStream = remember {
+                    if (com.subastasapp.BuildConfig.DEMO_MODE) com.subastasapp.data.realtime.MockBidStream
+                    else PollingBidStream(subastaApi)
+                }
                 NavHost(navController = homeNav, startDestination = "auctions_list") {
                     composable("auctions_list") {
                         AuctionListScreen(

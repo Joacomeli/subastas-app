@@ -15,6 +15,12 @@ object RetrofitClient {
     // por defecto http://10.0.2.2:8080/, el backend local visto desde el emulador).
     private val BASE_URL: String = com.subastasapp.BuildConfig.BASE_URL
 
+    /** En modo demo, el último interceptor responde en memoria y nunca llega a la red. */
+    private fun OkHttpClient.Builder.withDemo(): OkHttpClient.Builder {
+        if (com.subastasapp.BuildConfig.DEMO_MODE) addInterceptor(DemoBackend)
+        return this
+    }
+
     private fun getLoggingInterceptor() = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
@@ -32,7 +38,7 @@ object RetrofitClient {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(OkHttpClient.Builder().addInterceptor(getLoggingInterceptor()).build())
+            .client(OkHttpClient.Builder().addInterceptor(getLoggingInterceptor()).withDemo().build())
             .build()
             .create(AuthApiService::class.java)
     }
@@ -42,6 +48,7 @@ object RetrofitClient {
         val client = OkHttpClient.Builder()
             .addInterceptor(getLoggingInterceptor())
             .addInterceptor(getAuthInterceptor(tokenManager))
+            .withDemo()
             .build()
 
         return Retrofit.Builder()
@@ -58,6 +65,7 @@ object RetrofitClient {
         val client = OkHttpClient.Builder()
             .addInterceptor(getLoggingInterceptor())
             .addInterceptor(getAuthInterceptor(tokenManager))
+            .withDemo()
             .build()
 
         return Retrofit.Builder()
