@@ -1,0 +1,8 @@
+# No copiar artefactos de build ni archivos locales al contexto de Docker
+build/
+.gradle/
+bin/
+.idea/
+*.log
+*.iml
+.git/

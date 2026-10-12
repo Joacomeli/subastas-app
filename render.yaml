@@ -1,0 +1,23 @@
+# Render Blueprint para el backend de Subastas (Spring Boot).
+# La base PostgreSQL es externa (Render Postgres, Neon, Supabase, etc.): se configura por variables de entorno.
+services:
+  - type: web
+    name: subastas-backend
+    runtime: docker
+    rootDir: backend
+    plan: free
+    region: oregon
+    branch: main
+    envVars:
+      - key: SPRING_DATASOURCE_URL      # jdbc:postgresql://host:5432/db?sslmode=require
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true             # Render genera un valor aleatorio
+      - key: JWT_EXPIRATION
+        value: "86400000"
+      - key: ADMIN_EMAILS               # quiénes pueden aprobar consignaciones
+        sync: false

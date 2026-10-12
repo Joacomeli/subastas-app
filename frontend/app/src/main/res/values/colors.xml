@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#0A1931</color>
+    <color name="accent">#C9A84C</color>
+    <color name="splash_background">#0A1931</color>
+    <color name="gold">#C9A84C</color>
+    <color name="logo_container">#1A2D47</color>
+    <color name="background">#F8F9FD</color>
+    <color name="card">#E9E9E9</color>
+    <color name="text_primary">#1E1E1E</color>
+    <color name="text_secondary">#555555</color>
+</resources>

@@ -1,0 +1,41 @@
+# Entorno local: PostgreSQL 16 (+ backend opcional).
+#
+#   cp .env.example .env        # y completar las claves
+#   docker compose up -d db     # solo la base (después correr el backend con gradle bootRun)
+#   docker compose up -d --build  # base + backend en contenedor
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: subastasdb
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Definí DB_PASSWORD en .env}
+    ports:
+      - "127.0.0.1:5432:5432"   # solo accesible desde tu máquina
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Se ejecuta una sola vez, cuando el volumen está vacío.
+      - ./backend/sql/schema_postgres.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d subastasdb"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/subastasdb
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET:?Definí JWT_SECRET en .env}
+      ADMIN_EMAILS: ${ADMIN_EMAILS:-}
+      LOG_RESET_CODES: ${LOG_RESET_CODES:-false}
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:

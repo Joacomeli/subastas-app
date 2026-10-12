@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tema para el Splash Screen (API 12+) -->
+    <style name="Theme.SubastasApp.Splash" parent="Theme.SplashScreen">
+        <!-- Fondo del splash system -->
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <!-- Ícono del splash system -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <!-- Duración (opcional, el sistema lo maneja) -->
+        <item name="windowSplashScreenAnimationDuration">200</item>
+        <!-- Tema al que cambiar después del splash -->
+        <item name="postSplashScreenTheme">@android:style/Theme.Material.Light.NoActionBar</item>
+    </style>
+</resources>

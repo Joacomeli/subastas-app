@@ -1,0 +1,335 @@
+{
+  "info": {
+    "name": "Subastas - Módulo Consignación",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Registrarse",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\",\n  \"email\": \"juan.perez@example.com\",\n  \"password\": \"password123\",\n  \"documento\": \"39485762\",\n  \"domicilioLegal\": \"Av. Siempreviva 742\",\n  \"paisOrigen\": \"Argentina\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "auth",
+            "register"
+          ]
+        }
+      }
+    },
+    {
+      "name": "2. Iniciar Sesión",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"juan.perez@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "3. Consignar un Artículo",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <TOKEN_AQUI>",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Reloj Rolex GMT-Master II\",\n  \"descripcion\": \"Edición 2023, caja de acero Oystersteel, bisel Cerachrom rojo y azul. Excelente estado.\",\n  \"fotos\": \"https://picsum.photos/seed/rolex1/600/400\",\n  \"categoria\": \"ESPECIAL\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/consignaciones",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "consignaciones"
+          ]
+        }
+      }
+    },
+    {
+      "name": "4. Ver mis Consignaciones",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <TOKEN_AQUI>",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/consignaciones",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "consignaciones"
+          ]
+        }
+      }
+    },
+    {
+      "name": "5. Revisar Consignación - ACEPTAR",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <TOKEN_AQUI>",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"decision\": \"aceptado\",\n  \"precio_base\": 5000.00,\n  \"fecha_subasta\": \"2026-11-20\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/consignaciones/1/revisar",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "consignaciones",
+            "1",
+            "revisar"
+          ]
+        }
+      }
+    },
+    {
+      "name": "6. Revisar Consignación - RECHAZAR",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <TOKEN_AQUI>",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"decision\": \"rechazado\",\n  \"motivo_rechazo\": \"El artículo presenta ralladuras profundas en el cristal y bisel.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/consignaciones/1/revisar",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "consignaciones",
+            "1",
+            "revisar"
+          ]
+        }
+      }
+    },
+    {
+      "name": "7. Ver mis Notificaciones",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <TOKEN_AQUI>",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/notificaciones",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "notificaciones"
+          ]
+        }
+      }
+    },
+    {
+      "name": "8. Confirmar Propuesta - ACEPTAR",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <TOKEN_AQUI>",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"aceptar\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/consignaciones/1/confirmar",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "consignaciones",
+            "1",
+            "confirmar"
+          ]
+        }
+      }
+    },
+    {
+      "name": "9. Confirmar Propuesta - CANCELAR",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <TOKEN_AQUI>",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"aceptar\": false,\n  \"devolucionFisica\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/consignaciones/1/confirmar",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "consignaciones",
+            "1",
+            "confirmar"
+          ]
+        }
+      }
+    },
+    {
+      "name": "10. Listar Subastas Activas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/subastas/activas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "subastas",
+            "activas"
+          ]
+        }
+      }
+    },
+    {
+      "name": "11. Listar Items de la Subasta",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/subastas/1/items",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "subastas",
+            "1",
+            "items"
+          ]
+        }
+      }
+    }
+  ]
+}
